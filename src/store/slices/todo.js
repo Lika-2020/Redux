@@ -26,17 +26,23 @@ export const todoSlice = createSlice({
       };
     },
 
-    toggleCompleteness: (state, { payload }) => {
-      const { id } = payload;
+    toggleCompleteness: (state, action) => {
+      const { id } = action.payload;
 
-      const targetTodo = state.byIds[id];
+      const todo = state.byIds[id];
 
-      targetTodo.completed = !targetTodo.completed;
+      todo.completed = !todo.completed;
+    },
+
+    deleteTodo: (state, action) => {
+      const id = action.payload;
+      state.allIds = state.allIds.filter((todoId) => todoId !== id);
+      delete state.byIds[id];
     },
   },
 });
 
 
-export const { addTodo, toggleCompleteness } = todoSlice.actions;
+export const { addTodo, toggleCompleteness, deleteTodo } = todoSlice.actions;
 
 export default todoSlice.reducer;

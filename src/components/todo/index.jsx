@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import cx from "classnames";
 
-import { toggleCompleteness } from "../../store/slices/todo";
+import { toggleCompleteness, deleteTodo } from "../../store/slices/todo";
 
 import styles from './index.module.css';
 
@@ -13,7 +13,12 @@ export const Todo = ({ todo }) => {
     dispatch(toggleCompleteness({ id: todo.id }));
   }
 
+  const deleteTodoItem = () => {
+    dispatch(deleteTodo({ id: todo.id }));
+  }
+
   return (
+    
     <li className={styles.item} onClick={toggleTodoItem}>
       {todo.completed ? "👌" : "👋"}{" "}
       <span
@@ -23,6 +28,10 @@ export const Todo = ({ todo }) => {
       >
         {todo.content}
       </span>
+      <button className={styles.deleteButton} onClick={deleteTodoItem}>
+        Delete
+      </button>
     </li>
+
   );
 };
